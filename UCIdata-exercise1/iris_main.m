@@ -6,7 +6,7 @@ upToFold = 10; % up to how many folds?
 
 
 tic 
-
+rng(10); % For reproducibility
 filename = 'iris.data';
 DATA = dataset('File', filename, 'Delimiter', ',', 'ReadVarNames', false);
 
