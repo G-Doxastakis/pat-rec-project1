@@ -27,7 +27,7 @@ ylabel('error');
 
 [minError, ind] = min(correlation(:,2));
 bestK = correlation(ind,1);
-txt2 = 'best K \rightarrow';
+txt2 = strcat(strcat('best K = ',num2str(bestK)), ' \rightarrow');
 text(bestK,minError,txt2,'Color','red','HorizontalAlignment','right');
 
 toc
