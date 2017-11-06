@@ -1,0 +1,28 @@
+Source:
+Jacek Czerniak, Ph.D., Assistant Professor 
+Systems Research Institute 
+Polish Academy of Sciences 
+Laboratory of Intelligent Systems 
+ul. Newelska 6, Room 218 
+01-447 Warszawa, Poland 
+e-mail: jacek.czerniak '@' ibspan.waw.pl or jczerniak '@' ukw.edu.pl 
+
+-- Attribute lines: 
+For example, 'no	no	yes	yes	yes	yes	no' 
+Where: 
+'no'	Occurrence of nausea 
+'no'	Lumbar pain 
+'yes'	Urine pushing (continuous need for urination) 
+'yes'	Micturition pains 
+'yes'	Burning of urethra, itch, swelling of urethra outlet 
+'yes'	decision: Inflammation of urinary bladder 
+
+
+Attribute Information:
+
+a1	Occurrence of nausea { yes, no }	
+a2	Lumbar pain { yes, no }	
+a3	Urine pushing (continuous need for urination) { yes, no }	
+a4	Micturition pains { yes, no }	
+a5	Burning of urethra, itch, swelling of urethra outlet { yes, no }	
+d1	decision: Inflammation of urinary bladder { yes, no }
