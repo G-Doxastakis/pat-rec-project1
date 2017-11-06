@@ -16,7 +16,7 @@ learn1
 lw1
 mfa1
 mixexp1
-mixexp2
+%mixexp2
 mixexp3
 mog1
 mpe1
