@@ -3,7 +3,7 @@ function [ W,epochs] = trainPerceptron( x, y, rate )
     W=rand(1,size(x,2))';
     yapr=zeros(size(x,1),1);
     epochs=0;
-    while(~isequal(y,yapr))
+    while(~isequal(y,yapr)&&epochs<1000)
         epochs=epochs+1;
         for i=1:size(x,1)
             yapr(i)=sign(x(i,:)*W);

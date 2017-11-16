@@ -9,11 +9,9 @@ function [ output_args ] = perceptronVisualization( Inputs,Output,net )
     scatter(class2(:,2),class2(:,1),'ob');
     a=(net(2)/(-net(1)));
     b=(net(3)/(-net(1)));
-    x=((max(class1(:,1))+5-b)/a):0.1:((-b)/a);
-    y=a*x+b;
-    plot(x,y);
-    legend('Letter I','Letter O','Decision limit');
-    xlabel('Xaxis variance'); ylabel('Number of Pixels');
+    refline([a,b])
+    %legend('Class1','Class2','Decision limit');
+    %xlabel('Feature 1'); ylabel('Feature 2');
     hold off;
 
 end
