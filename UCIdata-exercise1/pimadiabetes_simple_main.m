@@ -9,7 +9,7 @@ load('datasets.mat');
 
 X = pimaindiansdiabetes(:,1:end-1);
 Y = table2array(pimaindiansdiabetes(:,5));
-rng(10); % For reproducibility
+%rng(10); % For reproducibility
 Mdl = fitcknn(X,Y);
 
 g = zeros(upToK,2);
