@@ -1,8 +1,15 @@
 %Bayes classifier
 %Assumes last column of input TRAIN and TEST matrices is the class
+%set covarianceMode to 1 for common diagonal covariance matrix
+%set covarianceMode to 2 for common covariance matrix
+%set covarianceMode to 3 for a seperate covariance matrix for each class
 
-function testval = bayes_classifier(XTRAIN, XTEST)
-%fprintf('Fitting Bayes Classifier :\n');
+function testval = bayes_classifier(XTRAIN, XTEST, covarianceMode)
+if nargin < 3
+    fprintf('No covarianceMode specified : ');
+    covarianceMode = 3;
+end
+fprintf('Fitting Bayes Classifier :\n');
 
 trainDataSize  = size(XTRAIN,1);
 testDataSize  = size(XTEST,1);
@@ -14,17 +21,53 @@ classes = accumarray(idx,1:trainDataSize,[],@(r){XTRAIN(r,1:end-1)});
 %Generate the summary map from all the classes 
 classMap = containers.Map(C, classes);
 
-%Calculate the std deviation and mean of all the features for all the
-%classes
-stdMap = containers.Map('KeyType','int32','ValueType','any');
+covMap = containers.Map('KeyType','int32','ValueType','any');
 meanMap = containers.Map('KeyType','int32','ValueType','any');
 
-for i = 1:size(C,1)
-    c = C(i);
-    if size(classMap(c),1) ~= 0
-        stdMap(c) = std(classMap(c),1,1);
-        meanMap(c) = mean(classMap(c),1);
-    end
+switch covarianceMode
+    case 1
+        %Calculate the common diagonal covariance and mean of all the features for all the
+        %classes
+        fprintf('using COMMON DIAGONAL covariance matrix for all classes :\n');
+        
+        allClassesFeatures = [];
+        for i = 1:size(C,1)
+            c = C(i);
+            allClassesFeatures = [allClassesFeatures; classMap(c)];
+        end
+        
+        for i = 1:size(C,1)
+            c = C(i);
+            covMap(c) = cov(allClassesFeatures(:)) * eye (size(allClassesFeatures,2));
+            meanMap(c) = mean(allClassesFeatures,1);
+        end
+    case 2
+        %Calculate the common covariance and mean of all the features for all the
+        %classes
+        fprintf('using COMMON covariance matrix for all classes :\n');
+        
+        allClassesFeatures = [];
+        for i = 1:size(C,1)
+            c = C(i);
+            allClassesFeatures = [allClassesFeatures; classMap(c)];
+        end
+        for i = 1:size(C,1)
+            c = C(i);
+            covMap(c) = cov(allClassesFeatures);
+            meanMap(c) = mean(allClassesFeatures,1);
+        end
+    case 3 
+        %Calculate the covariance and mean of all the features for all the
+        %classes seperately
+        fprintf('using SEPERATE covariance matrix for each class :\n');
+
+        for i = 1:size(C,1)
+            c = C(i);
+            if size(classMap(c),1) ~= 0
+                covMap(c) = cov(classMap(c));
+                meanMap(c) = mean(classMap(c),1);
+            end
+        end
 end
 
 %-------------Find the accuracy of training and testing data------
@@ -36,7 +79,7 @@ for trainIndex=1:trainDataSize
     for i = 1:size(C,1)
         c = C(i);
         if size(classMap(c),1) ~= 0 
-            condProb = normpdf(XTRAIN(trainIndex,1:end-1), meanMap(c),stdMap(c));
+            condProb = mvnpdf(XTRAIN(trainIndex,1:end-1), meanMap(c), covMap(c));
             condProb = prod(condProb);
             priorProb = size(classMap(c),1)/trainDataSize;
             prob = cat(2,prob,condProb*priorProb);
@@ -50,7 +93,7 @@ end
 
 accuratePredictions = (calculatedY == XTRAIN(:,end));
 trainingAccuracy = sum(accuratePredictions)*100/size(accuratePredictions,1);
-%fprintf('Training Accuracy = %4.2f\n',trainingAccuracy);
+fprintf('Training Accuracy = %4.2f\n',trainingAccuracy);
     
 %Testing
 calculatedY = [];
@@ -59,7 +102,7 @@ for testIndex=1:testDataSize
     for i = 1:size(C,1)
         c = C(i);
         if size(classMap(c),1) ~= 0 
-            condProb = normpdf(XTEST(testIndex,1:end-1), meanMap(c),stdMap(c));
+            condProb = mvnpdf(XTEST(testIndex,1:end-1), meanMap(c), covMap(c));
             condProb = prod(condProb);
             priorProb = size(classMap(c),1)/trainDataSize;
             prob = cat(2,prob,condProb*priorProb);
@@ -73,5 +116,5 @@ end
 
 accuratePredictions = (calculatedY == XTEST(:,end));
 testAccuracy = sum(accuratePredictions)*100/size(accuratePredictions,1);
-%fprintf('Test Accuracy = %4.2f\n\n',testAccuracy);
+fprintf('Test Accuracy = %4.2f\n\n',testAccuracy);
 testval = testAccuracy;
