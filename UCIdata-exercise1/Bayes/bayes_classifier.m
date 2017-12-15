@@ -111,12 +111,13 @@ for trainIndex=1:trainDataSize % Loop  over all x in the train set
         % using mean and covariance for this class.
         % (Note: depending on the covarianceMode chosen, common and  diagonal, 
         % common or seperate covariance matrices might be used. See above.)
-        condProb = mvnpdf(XTRAIN(trainIndex,1:end-1), meanMap(c), covMap(c));
+        % (Note: no need to normalize by p(x), as its the same everywhere) 
+        condProb = mvnpdf(XTRAIN(trainIndex,1:end-1), meanMap(c), covMap(c))*priors(i);
         
         % Put the a posteriori and a priori probabilities of current class
         % for current x side by side for 
         % later comparison
-        prob = cat(2,prob,condProb*priors(i)); 
+        prob = cat(2, prob, condProb); 
     end
     
     % Get the greatest a posteriori probability (estimate of which class the
@@ -127,7 +128,7 @@ for trainIndex=1:trainDataSize % Loop  over all x in the train set
     calculatedY = [calculatedY;argmax];
 end
 
-% Now count how many estimates were right
+% Now count how many estimates were right by comparing them with the labels
 accuratePredictions = (calculatedY == XTRAIN(:,end));
 % Get the accuracy percentage
 trainingAccuracy = sum(accuratePredictions)*100/size(accuratePredictions,1);
@@ -154,12 +155,13 @@ for testIndex=1:testDataSize % Loop  over all x in the train set
         % using mean and covariance for this class.
         % (Note: depending on the covarianceMode chosen, common and  diagonal, 
         % common or seperate covariance matrices might be used. See above.)
-        condProb = mvnpdf(XTEST(testIndex,1:end-1), meanMap(c), covMap(c));
+        % (Note: no need to normalize by p(x), as its the same everywhere) 
+        condProb = mvnpdf(XTEST(testIndex,1:end-1), meanMap(c), covMap(c))*priors(i);
         
         % Put the a posteriori and a priori probabilities of current class
         % for current x side by side for 
         % later comparison
-        prob = cat(2, prob, condProb*priors(i));
+        prob = cat(2, prob, condProb);
     end
     
     % Get the greatest a posteriori probability (estimate of which class the
@@ -170,7 +172,7 @@ for testIndex=1:testDataSize % Loop  over all x in the train set
     calculatedY = [calculatedY;argmax];
 end
 
-% Now count how many estimates were right
+% Now count how many estimates were right by comparing them with the labels
 accuratePredictions = (calculatedY == XTEST(:,end));
 % Get the accuracy percentage
 testAccuracy = sum(accuratePredictions)*100/size(accuratePredictions,1);
