@@ -1,0 +1,1 @@
+P(income='>50k'| education='Bachelors', maritalstatus='Never-married', race='White', gender='Male', nativecountry='Greece') = 0.3214
