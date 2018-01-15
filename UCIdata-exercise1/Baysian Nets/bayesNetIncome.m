@@ -6,7 +6,7 @@ for i=1:N
     classnum(i)=height(classes{i});
     data(:,i)=grp2idx(table2array(income(:,i)));
 end
-data = data(1:300,:);
+% data = data(1:300,:);
 
 %Create network
 % 2 3  5 6 7
@@ -35,9 +35,17 @@ cases = num2cell(data');
 engine = jtree_inf_engine(bnet);
 bnet = learn_params_em(engine, cases);
 
-%inference
+%inference forward
 engine = jtree_inf_engine(bnet);
 evidence = cell(1,N);
-evidence(onodes) = num2cell([1 5 5 2 38]);
+evidence(onodes) = num2cell([10 5 5 2 12]);
 [engine, ll] = enter_evidence(engine, evidence);
-m = marginal_nodes(engine, 8);
+p8 = marginal_nodes(engine, 8);
+
+%inference inverse
+nodes = [1];
+engine = jtree_inf_engine(bnet);
+evidence = cell(1,N);
+evidence(nodes) = num2cell([3]);
+[engine, ll] = enter_evidence(engine, evidence);
+p2 = marginal_nodes(engine, 2);
