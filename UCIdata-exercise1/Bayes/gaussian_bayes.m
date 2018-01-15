@@ -37,11 +37,11 @@ for i = 1:3 % Loop over all covariance modes
     accuracies = [accuracies; overallAccuracy]; 
 end
 figure;
-x = categorical({'common diagonal covariance matrix','common covariance matrix','seperate covariance matrix for each class'});
+x = categorical({'κοινος διαγώνιος','κοινός','ξεχωριστός ανά κλάση'});
 bar(x, accuracies);
-title('Comparison of classifier accuracy with different covariance modes');
-xlabel('Covariance Mode:'); % x-axis label
-ylabel('Accuracy %:'); % y-axis label
+title('Σύγκριση ακρίβειας ταξινόμησης με διαφορετικές παραδοχές για τους πίνακες συνδιασποράς');
+xlabel('Πίνακας συνδιασποράς:'); % x-axis label
+ylabel('Ακρίβεια %:'); % y-axis label
 for i=1:3
     text(x(i),accuracies(i),num2str(accuracies(i),'%0.2f'),...
                'HorizontalAlignment','center',...

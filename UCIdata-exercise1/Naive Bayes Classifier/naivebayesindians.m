@@ -1,4 +1,5 @@
 clear;
+rng(10);
 load('../datasets.mat');
 dat = datatable2mat(pimaindiansdiabetes); 
 folds = nFoldDataset(array2table(dat),10);
