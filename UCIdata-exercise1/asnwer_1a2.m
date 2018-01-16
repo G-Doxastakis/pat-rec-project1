@@ -23,13 +23,13 @@ for K = 1:upToK
 end
 
 plot(g(:,1), g(:,2));
-title('Ξ£ΟΞ³ΞΊΟΞΉΟƒΞ· ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚ Ο„Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ·Ο‚ ΞΉΞ½Ξ΄ΞΉΞ¬Ξ½Ο‰Ξ½ Pima ΞΌΞµ Ξ΄ΞΉΞ±Ο†ΞΏΟΞµΟ„ΞΉΞΊΞ­Ο‚ Ο„ΞΉΞΌΞ­Ο‚ Ξ');
-xlabel('Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΞΊΞΏΞ½Ο„ΞΉΞ½ΟΟ„ΞµΟΟ‰Ξ½ Ξ³ΞµΞΉΟ„ΟΞ½Ο‰Ξ½: ');
-ylabel('Ξ£Ο†Ξ¬Ξ»ΞΌΞ± %:');
+title('Σύγκριση σφάλματος ταξινόμησης ινδιάνων Pima με διαφορετικές τιμές Κ');
+xlabel('Επιλεγμένος αριθμός κοντινότερων γειτόνων: ');
+ylabel('Σφάλμα %:');
 
 [minError, ind] = min(g(:,2));
 bestK = g(ind,1);
-txt2 = strcat(strcat('Ξ’Ξ­Ξ»Ο„ΞΉΟƒΟ„ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ K = ',num2str(bestK)),' (ΟƒΟ†Ξ¬Ξ»ΞΌΞ±: ',num2str(minError), ') \rightarrow');
+txt2 = strcat(strcat('Βέλτιστος αριθμός K = ',num2str(bestK)),' (σφάλμα: ',num2str(minError), ') \rightarrow');
 text(bestK,minError,txt2,'Color','red','HorizontalAlignment','right');
 
 toc

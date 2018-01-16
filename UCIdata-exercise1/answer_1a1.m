@@ -22,13 +22,13 @@ for K = 1:upToK
     correlation(K,2) = kloss*100;
 end
 plot(correlation(:,1), correlation(:,2));
-title('Ξ£ΟΞ³ΞΊΟΞΉΟƒΞ· ΟƒΟ†Ξ¬Ξ»ΞΌΞ±Ο„ΞΏΟ‚ Ο„Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ·Ο‚ Ο†Ο…Ο„ΟΞ½ Iris ΞΌΞµ Ξ΄ΞΉΞ±Ο†ΞΏΟΞµΟ„ΞΉΞΊΞ­Ο‚ Ο„ΞΉΞΌΞ­Ο‚ Ξ');
-xlabel('Ξ•Ο€ΞΉΞ»ΞµΞ³ΞΌΞ­Ξ½ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ ΞΊΞΏΞ½Ο„ΞΉΞ½ΟΟ„ΞµΟΟ‰Ξ½ Ξ³ΞµΞΉΟ„ΟΞ½Ο‰Ξ½: ');
-ylabel('Ξ£Ο†Ξ¬Ξ»ΞΌΞ± %:');
+title('Σύγκριση σφάλματος ταξινόμησης φυτών Iris με διαφορετικές τιμές Κ');
+xlabel('Επιλεγμένος αριθμός κοντινότερων γειτόνων: ');
+ylabel('Σφάλμα %:');
 
 [minError, ind] = min(correlation(:,2));
 bestK = correlation(ind,1);
-txt2 = strcat(strcat('\leftarrow ', 'Ξ’Ξ­Ξ»Ο„ΞΉΟƒΟ„ΞΏΟ‚ Ξ±ΟΞΉΞΈΞΌΟΟ‚ K = ',num2str(bestK)),' (ΟƒΟ†Ξ¬Ξ»ΞΌΞ±: ',num2str(minError), ')');
+txt2 = strcat(strcat('\leftarrow ', 'Βέλτιστος αριθμός K = ',num2str(bestK)),' (σφάλμα: ',num2str(minError), ')');
 text(bestK,minError,txt2,'Color','red','HorizontalAlignment','left');
 
 toc

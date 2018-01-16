@@ -3,9 +3,9 @@ function [ dataset ] = nFoldDataset( database, folds )
 %   Detailed explanation goes here
     [m,n] = size(database);
     database(randperm(m),:)=database;
-    seg=uint32(round(m/folds));
+    seg=uint32(floor(m/folds));
     for i=1:folds
-        validx=((folds-i)*seg)+1:(folds-i+1)*seg;
+        validx = (i-1)*seg+1:i*seg;
         dataset(i).train=database;
         dataset(i).train(validx,:)=[];
         dataset(i).val=database(validx,:);

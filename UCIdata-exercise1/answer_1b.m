@@ -4,7 +4,7 @@ close all;
 tic
 
 rng(8); % For reproducibility
-load('../datasets.mat');
+load('datasets.mat');
 
 % Randomize dataset
 dataSetSize = size(pimaindiansdiabetes,1);
@@ -37,11 +37,11 @@ for i = 1:3 % Loop over all covariance modes
     accuracies = [accuracies; overallAccuracy]; 
 end
 figure;
-x = categorical({'ΞΊΞΏΞΉΞ½ΞΏΟ‚ Ξ΄ΞΉΞ±Ξ³ΟΞ½ΞΉΞΏΟ‚','ΞΊΞΏΞΉΞ½ΟΟ‚','ΞΎΞµΟ‡Ο‰ΟΞΉΟƒΟ„ΟΟ‚ Ξ±Ξ½Ξ¬ ΞΊΞ»Ξ¬ΟƒΞ·'});
+x = categorical({'κοινος διαγώνιος','κοινός','ξεχωριστός ανά κλάση'});
 bar(x, accuracies);
-title('Ξ£ΟΞ³ΞΊΟΞΉΟƒΞ· Ξ±ΞΊΟΞ―Ξ²ΞµΞΉΞ±Ο‚ Ο„Ξ±ΞΎΞΉΞ½ΟΞΌΞ·ΟƒΞ·Ο‚ ΞΌΞµ Ξ΄ΞΉΞ±Ο†ΞΏΟΞµΟ„ΞΉΞΊΞ­Ο‚ Ο€Ξ±ΟΞ±Ξ΄ΞΏΟ‡Ξ­Ο‚ Ξ³ΞΉΞ± Ο„ΞΏΟ…Ο‚ Ο€Ξ―Ξ½Ξ±ΞΊΞµΟ‚ ΟƒΟ…Ξ½Ξ΄ΞΉΞ±ΟƒΟ€ΞΏΟΞ¬Ο‚');
-xlabel('Ξ Ξ―Ξ½Ξ±ΞΊΞ±Ο‚ ΟƒΟ…Ξ½Ξ΄ΞΉΞ±ΟƒΟ€ΞΏΟΞ¬Ο‚:'); % x-axis label
-ylabel('Ξ‘ΞΊΟΞ―Ξ²ΞµΞΉΞ± %:'); % y-axis label
+title('Σύγκριση ακρίβειας ταξινόμησης με διαφορετικές παραδοχές για τους πίνακες συνδιασποράς');
+xlabel('Πίνακας συνδιασποράς:'); % x-axis label
+ylabel('Ακρίβεια %:'); % y-axis label
 for i=1:3
     text(x(i),accuracies(i),num2str(accuracies(i),'%0.2f'),...
                'HorizontalAlignment','center',...
